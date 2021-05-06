@@ -1,4 +1,4 @@
-# Gryffondor Squad
+# Gryffindor Squad
 ###Description:
 Service to Wish List
 
