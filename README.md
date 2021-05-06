@@ -1,4 +1,4 @@
-# Suicide Squad
+# Gryffondor Squad
 ###Description:
 Service to Wish List
 
