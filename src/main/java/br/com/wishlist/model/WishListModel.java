@@ -19,4 +19,7 @@ public class WishListModel {
     private Long id;
     private Long idClient;
     private Long idProduct;
+
+
+
 }
