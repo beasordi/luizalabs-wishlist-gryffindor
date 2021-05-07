@@ -17,7 +17,7 @@ import java.util.HashSet;
 @Profile("!prod")
 @Configuration
 @EnableSwagger2
-public class DictSwaggerConfig {
+public class SwaggerConfig {
 
     @Bean
     public Docket detailApi() {
