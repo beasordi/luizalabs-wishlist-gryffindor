@@ -17,7 +17,7 @@ import java.util.HashSet;
 @Profile("!prod")
 @Configuration
 @EnableSwagger2
-public class DictSwaggerConfig {
+public class SwaggerConfig {
 
     @Bean
     public Docket detailApi() {
@@ -41,7 +41,7 @@ public class DictSwaggerConfig {
 
         ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
 
-        apiInfoBuilder.title("Suicide Squad");
+        apiInfoBuilder.title("Gryffondor Squad");
         apiInfoBuilder.description("Rest API to provide Detartament registration");
         apiInfoBuilder.version("0.0.1");
         apiInfoBuilder.license("Simple Bank Tec");
