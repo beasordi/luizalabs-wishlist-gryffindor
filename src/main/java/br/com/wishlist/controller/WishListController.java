@@ -1,7 +1,7 @@
 package br.com.wishlist.controller;
 
-import br.com.wishlist.dto.WishListRequest;
-import br.com.wishlist.service.WishListService;
+import br.com.wishlist.domain.dto.WishListRequest;
+import br.com.wishlist.domain.service.WishListService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,10 +1,9 @@
-package br.com.wishlist.service;
+package br.com.wishlist.domain.service;
 
-import br.com.wishlist.dto.WishListRequest;
+import br.com.wishlist.domain.dto.WishListRequest;
 import br.com.wishlist.exception.WishListLimitExceededException;
-import br.com.wishlist.model.WishListModel;
-import br.com.wishlist.repository.WishListRepository;
-import lombok.SneakyThrows;
+import br.com.wishlist.domain.model.WishListModel;
+import br.com.wishlist.domain.repository.WishListRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

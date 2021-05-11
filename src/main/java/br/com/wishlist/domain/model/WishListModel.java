@@ -1,4 +1,4 @@
-package br.com.wishlist.model;
+package br.com.wishlist.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
