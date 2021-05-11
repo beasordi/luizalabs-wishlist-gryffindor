@@ -1,8 +1,8 @@
 package br.com.wishlist.domain.service;
 
+import br.com.wishlist.domain.dto.ProductRequest;
 import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.repository.ProductRepository;
-import br.com.wishlist.domain.dto.ProductRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

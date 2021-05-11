@@ -1,6 +1,6 @@
-package br.com.wishlist.repository;
+package br.com.wishlist.domain.repository;
 
-import br.com.wishlist.model.ProductModel;
+import br.com.wishlist.domain.model.ProductModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
