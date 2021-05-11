@@ -3,16 +3,17 @@ package br.com.wishlist.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import com.google.common.base.Predicate;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 @Profile("!prod")
 @Configuration
@@ -22,40 +23,36 @@ public class SwaggerConfig {
     @Bean
     public Docket detailApi() {
 
-        Docket docket = new Docket(DocumentationType.SWAGGER_2);
-
-        docket
+        return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.wishlist.controller"))
-                .paths(PathSelectors.any())
+                .apis((Predicate<RequestHandler>)RequestHandlerSelectors.basePackage("br.com.wishlist.controller"))
+                .paths((Predicate<String>) PathSelectors.any())
                 .build()
-                .apiInfo(this.infoApi().build())
-                .consumes(new HashSet<String>(Arrays.asList("application/json")))
-                .produces(new HashSet<String>(Arrays.asList("application/json")));
+                .apiInfo(metaData());
 
-        return docket;
+//                .apiInfo(this.infoApi().build())
+//                .consumes(new HashSet<String>(Arrays.asList("application/json")))
+//                .produces(new HashSet<String>(Arrays.asList("application/json")));
+
     }
 
 
-    private ApiInfoBuilder infoApi() {
+    private ApiInfo metaData() {
 
-        ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
+        return new ApiInfoBuilder()
 
-        apiInfoBuilder.title("Gryffindor Squad");
-        apiInfoBuilder.description("Rest API to provide Detartament registration");
-        apiInfoBuilder.version("0.0.1");
-        apiInfoBuilder.license("Simple Bank Tec");
-        apiInfoBuilder.licenseUrl("http://www.simplebank.com");
-        apiInfoBuilder.contact(this.contact());
+        .title("Gryffindor Squad - Projeto Final")
+        .description("Testando a config do Swagger")
+        .version("1.0.0")
+        .license("Apache License Version 2.0")
+        .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
+        .build();
 
-        return apiInfoBuilder;
+
     }
 
-    private Contact contact() {
-
-        return new Contact(
-                "Gryffindor Squad",
-                "http://www.simplebank.com",
-                "tec@simplebank.com");
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }
