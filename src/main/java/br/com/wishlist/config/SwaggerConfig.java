@@ -10,7 +10,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import com.google.common.base.Predicate;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -29,11 +28,9 @@ public class SwaggerConfig {
                 .paths((Predicate<String>) PathSelectors.any())
                 .build()
                 .apiInfo(metaData());
-
 //                .apiInfo(this.infoApi().build())
 //                .consumes(new HashSet<String>(Arrays.asList("application/json")))
 //                .produces(new HashSet<String>(Arrays.asList("application/json")));
-
     }
 
 
@@ -47,8 +44,6 @@ public class SwaggerConfig {
         .license("Apache License Version 2.0")
         .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
         .build();
-
-
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

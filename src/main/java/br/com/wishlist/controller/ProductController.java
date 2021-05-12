@@ -1,19 +1,14 @@
 package br.com.wishlist.controller;
 
-import br.com.wishlist.domain.dto.ProductRequest;
+import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 
-
-
-
-@Slf4j //descobrir oq é
+@Slf4j
 @RestController
 public class ProductController {
 
@@ -21,9 +16,26 @@ public class ProductController {
     private ProductService productService;
 
     //Adicionar produto a base de dados
-    @PostMapping(value = "/adicionar")
-    public ResponseEntity<?> adicionar(@RequestBody ProductRequest product){
-        return null;
-//        return productService.save(product);
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    public void addProducts(@RequestBody ProductModel product) {
+        productService.addProduct(product);
+    }
+
+    //Deletar produto da base de dados
+    @RequestMapping(value = "/product", method = RequestMethod.DELETE)
+    public void deleteProduct(@RequestBody Long id) {
+        productService.deleteProduct(id);
+    }
+
+    //Listar produtos da base de dados
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
+    public List<ProductModel> listProducts(){
+        return productService.listProduct();
+    }
+
+    //Alterar produtos da base de dados
+    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+    public void updateProduct(@RequestBody ProductModel product){
+        productService.updateProduct(product);
     }
 }
