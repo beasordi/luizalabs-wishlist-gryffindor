@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Column;
+
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -14,16 +14,9 @@ import javax.validation.constraints.NotNull;
 public class ProductRequest {
 
     @NotNull(message = "name is required")
-    @Column(name = "name", length = 255)
     private String name;
-
     @NotNull(message = "sku is required")
-    @Column(name = "sku")
-    private Long sku;
-
-    @Column(name = "category")
+    private String sku;
     private String category;
-
-    @Column(name = "provider")
     private String provider;
 }

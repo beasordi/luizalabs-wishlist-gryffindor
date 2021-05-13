@@ -1,7 +1,7 @@
 package br.com.wishlist.controller;
 
 import br.com.wishlist.controller.dto.ProductRequest;
-import br.com.wishlist.domain.model.ProductModel;
+import br.com.wishlist.controller.dto.ProductResponse;
 import br.com.wishlist.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +17,30 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    @Autowired //Ponto de injeção da classe bean
+    @Autowired
     private ProductService productService;
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public ResponseEntity<String> addProducts(@Valid @RequestBody ProductRequest request) { //O valid torna o notnull e o notempty
+    public ResponseEntity<String> addProducts(@Valid @RequestBody ProductRequest request) {
         productService.addProduct(request);
         return new ResponseEntity<>("Produto adicionado com sucesso!", HttpStatus.OK);
     }
-    @RequestMapping(value = "/product", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteProduct(@Valid @RequestBody Long id) {
-        productService.deleteProduct(id);
-        return new ResponseEntity<>("Seu produto foi deletado com sucesso!", HttpStatus.OK);
-    }
+
     @RequestMapping(value = "/product", method = RequestMethod.GET)
-    public ResponseEntity<String> List<ProductModel> listProducts(){
-        return productService.listProduct();
+    public ResponseEntity<List<ProductResponse>> listProducts() {
+        List<ProductResponse> response = productService.listProduct();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @RequestMapping(value = "/product", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateProduct(@Valid @RequestBody ProductRequest request){
-        productService.updateProduct(request);
-        return new ResponseEntity<>("Produto atualizado com sucesso!");
+
+    @RequestMapping(value = "/product/{sku}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteProduct(@PathVariable("sku") String sku) {
+        productService.deleteProduct(sku);
+        return new ResponseEntity<>("Produto deletado com sucesso!", HttpStatus.OK);
     }
+//
+//    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+//    public ResponseEntity<String> updateProduct(@Valid @RequestBody ProductRequest request){
+//        productService.updateProduct(request);
+//        return new ResponseEntity<>("Produto atualizado com sucesso!");
+//    }
 }

@@ -25,7 +25,7 @@ public class ProductModel {
     private String name;
 
     @Column(name = "sku", nullable = false, unique = true)
-    private Long sku;
+    private String sku;
 
     @Column(name = "category")
     private String category;
