@@ -1,7 +1,7 @@
 package br.com.wishlist.domain.service;
 
 import br.com.wishlist.domain.dto.WishListRequest;
-import br.com.wishlist.exception.WishListLimitExceededException;
+import br.com.wishlist.exception.WishListLimitExcededException;
 import br.com.wishlist.domain.model.WishListModel;
 import br.com.wishlist.domain.repository.WishListRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +32,13 @@ public class WishListService {
     }
 
     //4. validar, a wish list pode ter no máximo 20 produtos -ok;
-    private void validaroQuantidadeProdutosNaWishList(Long clientId) throws WishListLimitExceededException {
+    private void validaroQuantidadeProdutosNaWishList(Long clientId) throws WishListLimitExcededException {
         //ir no banco de dados;
         List<WishListModel> wishLists = wishListRepository.findAllByClientId(clientId);
         // se o retorno da consulta for igual a 20 produtos
         if (wishLists.size() >= 20) {
             // lançar uma exception
-            throw new WishListLimitExceededException();
+            throw new WishListLimitExcededException();
         }
     }
 }

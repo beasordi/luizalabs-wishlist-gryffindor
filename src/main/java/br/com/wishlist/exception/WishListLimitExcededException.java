@@ -1,4 +1,4 @@
 package br.com.wishlist.exception;
 
-public class WishListLimitExceededException extends Exception {
+public class WishListLimitExcededException extends Exception {
 }

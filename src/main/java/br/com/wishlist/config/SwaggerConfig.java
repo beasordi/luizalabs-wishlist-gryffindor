@@ -28,9 +28,6 @@ public class SwaggerConfig {
                 .paths((Predicate<String>) PathSelectors.any())
                 .build()
                 .apiInfo(metaData());
-//                .apiInfo(this.infoApi().build())
-//                .consumes(new HashSet<String>(Arrays.asList("application/json")))
-//                .produces(new HashSet<String>(Arrays.asList("application/json")));
     }
 
 
