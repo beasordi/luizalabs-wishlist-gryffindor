@@ -1,7 +1,8 @@
 package br.com.wishlist.controller;
 
+import br.com.wishlist.controller.dto.ClienteRequest;
 import br.com.wishlist.domain.model.ClienteModel;
-import br.com.wishlist.domain.service.ClienteService;
+import br.com.wishlist.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -21,26 +23,8 @@ public class ClienteController {
 
     //Adicionar cliente a base de dados
     @RequestMapping(value = "/cliente", method = RequestMethod.POST)
-    public void addCliente(@RequestBody ClienteModel cliente) {
-        clienteService.addCliente(cliente);
-    }
-
-    //Deletar cliente da base de dados
-    @RequestMapping(value = "/cliente", method = RequestMethod.DELETE)
-    public void deleteCliente(@RequestBody Long id) {
-        clienteService.deleteCliente(id);
-    }
-
-    //Listar clientes da base de dados
-    @RequestMapping(value = "/cliente", method = RequestMethod.GET)
-    public List<ClienteModel> listCliente(){
-        return clienteService.listCliente();
-    }
-
-    //Alterar os clientes da base de dados
-    @RequestMapping(value = "/cliente", method = RequestMethod.PUT)
-    public updateCliente(@RequestBody ClienteModel cliente){
-        clienteService.updateCliente(cliente);
+    public void addCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
+        clienteService.addCliente(clienteRequest);
     }
 
 
