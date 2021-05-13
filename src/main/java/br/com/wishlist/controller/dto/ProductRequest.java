@@ -1,10 +1,10 @@
-package br.com.wishlist.domain.dto;
+package br.com.wishlist.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -13,16 +13,17 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class ProductRequest {
 
-    @NotNull(message = "id is required")
-    @NotEmpty(message = "clientCod cannot be empty")
-    private Long id;
-
     @NotNull(message = "name is required")
+    @Column(name = "name", length = 255)
     private String name;
 
-    @NotNull(message = "quantStock is required")
-    private Long quantStock;
+    @NotNull(message = "sku is required")
+    @Column(name = "sku")
+    private Long sku;
 
+    @Column(name = "category")
     private String category;
+
+    @Column(name = "provider")
     private String provider;
 }

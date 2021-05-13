@@ -21,16 +21,13 @@ public class SwaggerConfig {
 
     @Bean
     public Docket detailApi() {
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis((Predicate<RequestHandler>)RequestHandlerSelectors.basePackage("br.com.wishlist.controller"))
                 .paths((Predicate<String>) PathSelectors.any())
                 .build()
                 .apiInfo(metaData());
-//                .apiInfo(this.infoApi().build())
-//                .consumes(new HashSet<String>(Arrays.asList("application/json")))
-//                .produces(new HashSet<String>(Arrays.asList("application/json")));
+//
     }
 
 
