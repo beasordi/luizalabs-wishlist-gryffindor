@@ -3,6 +3,7 @@ package br.com.wishlist.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,26 +14,22 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ProductModel{
+public class ProductModel {
 
     @Id
-    @NotNull(message = "id is required")
-    @NotEmpty(message = "clientCod cannot be empty")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // define o auto increment de um id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "id")
     private Long id;
 
-    @NotNull(message = "name is required")
-    @Column(name = "name", length = 255)
+    @Column(name = "name", length = 255, nullable = false)
     private String name;
 
-    @NotNull(message = "quantStock is required")
-    @Column(name = "quantStock")
-    private Long quantStock;
+    @Column(name = "sku", nullable = false, unique = true)
+    private String sku;
 
     @Column(name = "category")
     private String category;
 
     @Column(name = "provider")
     private String provider;
-    }
+}
