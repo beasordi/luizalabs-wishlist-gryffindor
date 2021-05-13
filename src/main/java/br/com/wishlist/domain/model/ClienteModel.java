@@ -3,6 +3,7 @@ package br.com.wishlist.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -16,13 +17,13 @@ public class ClienteModel {
 
 
     @Id
-    @NotNull
+    @NotNull(message = "id is required")
     @Column(unique = true, name = "id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column (name = "name", columnDefinition = "VARCHAR (255)")
+    @Column(name = "name", columnDefinition = "VARCHAR (255)")
     private String name;
     private String surname;
     private String telephone;
@@ -30,7 +31,8 @@ public class ClienteModel {
     private String email;
     private String login;
     private String password;
-    private String codigoProduto;
+    private String clientCode;
+
 
     public Long getId() {
         return id;
@@ -96,17 +98,13 @@ public class ClienteModel {
         this.password = password;
     }
 
-    public String getCodigoProduto() {
-        return codigoProduto;
+    public String getClientCode() {
+        return clientCode;
     }
 
-    public void setCodigoProduto(String codigoProduto) {
-        this.codigoProduto = codigoProduto;
+    public void setClientCode(String clientCode) {
+        this.clientCode = clientCode;
     }
-
-    //codigo_produto
-
-
 }
 
 
