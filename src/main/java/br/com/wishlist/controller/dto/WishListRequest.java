@@ -1,4 +1,4 @@
-package br.com.wishlist.domain.dto;
+package br.com.wishlist.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package br.com.wishlist.domain.service;
+package br.com.wishlist.service;
 
-import br.com.wishlist.domain.dto.WishListRequest;
+import br.com.wishlist.controller.dto.WishListRequest;
 import br.com.wishlist.exception.WishListLimitExceededException;
 import br.com.wishlist.domain.model.WishListModel;
 import br.com.wishlist.domain.repository.WishListRepository;
