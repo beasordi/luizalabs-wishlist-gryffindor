@@ -19,9 +19,9 @@ public class WishListModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id")
+    @Column(name = "client_id", nullable = false)
     private Long clientId;
 
-    @Column(name = "product_id")
+    @Column(name = "product_id", nullable = false)
     private Long productId;
 }
