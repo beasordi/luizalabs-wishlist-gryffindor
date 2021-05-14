@@ -12,18 +12,64 @@ import java.util.Arrays;
 @ControllerAdvice
 public class ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErroResponse> invalidArgument(MethodArgumentNotValidException e, HttpServletRequest request) {
+    public ResponseEntity<ErroResponse> invalidArgument(MethodArgumentNotValidException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message(tratamentoDeMensagem(e))
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
 
-        String nMsg = tratamentoDeMensagem(e);
+    @ExceptionHandler(NoProductsFoundInWishListExecption.class)
+    public ResponseEntity<ErroResponse> noProductsFoundInWishList(NoProductsFoundInWishListExecption e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("No Products Found In WishList")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
 
-        ErroResponse err = new ErroResponse(
-                nMsg,
-                HttpStatus.BAD_REQUEST.value()
-        );
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ResponseEntity<ErroResponse> clientNotFound() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("CLIENT NOT FOUND")
+                                .status(HttpStatus.NOT_FOUND.value())
+                                .build()
+                );
+    }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErroResponse> productNotFound() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("PRODUCT NOT FOUND")
+                                .status(HttpStatus.NOT_FOUND.value())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(WishListLimitExcededException.class)
+    public ResponseEntity<ErroResponse> wishListLimitExcededException() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("PRODUCTS LIMIT EXCEEDED (MAX 20) ")
+                                .status(HttpStatus.NOT_FOUND.value())
+                                .build()
+                );
     }
 
     private String tratamentoDeMensagem(MethodArgumentNotValidException e) {

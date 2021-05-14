@@ -1,7 +1,7 @@
 package br.com.wishlist.service;
 
 import br.com.wishlist.controller.dto.ClienteRequest;
-import br.com.wishlist.domain.model.ClienteModel;
+import br.com.wishlist.domain.model.ClientModel;
 import br.com.wishlist.domain.repository.ClienteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class ClienteService {
 
 
     public void addCliente(ClienteRequest clienteRequest) {
-        ClienteModel model = new ClienteModel();
+        ClientModel model = new ClientModel();
         model.setName(clienteRequest.getName());
         model.setSurname(clienteRequest.getSurname());
         model.setAddress(clienteRequest.getAddress());

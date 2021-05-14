@@ -1,13 +1,25 @@
 package br.com.wishlist.service;
 
+import br.com.wishlist.controller.dto.ProductWLResponse;
+import br.com.wishlist.controller.dto.WishListDeleteRequest;
 import br.com.wishlist.controller.dto.WishListRequest;
+import br.com.wishlist.controller.dto.WishListResponse;
+import br.com.wishlist.domain.model.ClientModel;
+import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.model.WishListModel;
+import br.com.wishlist.domain.repository.ClienteRepository;
+import br.com.wishlist.domain.repository.ProductRepository;
 import br.com.wishlist.domain.repository.WishListRepository;
+import br.com.wishlist.exception.ClientNotFoundException;
+import br.com.wishlist.exception.NoProductsFoundInWishListExecption;
+import br.com.wishlist.exception.ProductNotFoundException;
 import br.com.wishlist.exception.WishListLimitExcededException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -17,28 +29,115 @@ public class WishListService {
     @Autowired
     private WishListRepository wishListRepository;
 
-    public void process(WishListRequest request) {
-        log.info("[SERVICE - WishListService]");
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-        //1. buscar o PK na tabela produto pelo request.productId - pendente Beatriz
-        //2. buscar o PK na tabela cliente pelo request.clientId - pendente Thais
+    @Autowired
+    private ProductRepository productRepository;
 
-        //3. construir um model para enviar ao repository -ok;
-        WishListModel wishListModel = new WishListModel();
-        wishListModel.setClientId(1L);
-        wishListModel.setProductId(2L);
+    @SneakyThrows
+    public void addWishList(WishListRequest request) {
+        log.info("[SERVICE - WishListService - addWishList]");
+        clientExistValidation(request.getClientCod());
+        productExistValidation(request.getSku());
 
-        wishListRepository.save(wishListModel);
-    }
-
-    //4. validar, a wish list pode ter no máximo 20 produtos -ok;
-    private void validaroQuantidadeProdutosNaWishList(Long clientId) throws WishListLimitExcededException {
-        //ir no banco de dados;
-        List<WishListModel> wishLists = wishListRepository.findAllByClientId(clientId);
-        // se o retorno da consulta for igual a 20 produtos
-        if (wishLists.size() >= 20) {
-            // lançar uma exception
+        if (findWishList(request.getClientCod()).size() < 20) {
+            wishListRepository.save(
+                    WishListModel
+                            .builder()
+                            .sku(request.getSku())
+                            .clientCode(request.getClientCod())
+                            .nameWishList(request.getNameWishList())
+                            .build()
+            );
+        } else {
             throw new WishListLimitExcededException();
         }
+    }
+
+    public void remove(WishListDeleteRequest request) {
+        log.info("[SERVICE - WishListService - remove]");
+        clientExistValidation(request.getClientCod());
+        productExistValidation(request.getSku());
+
+        List<WishListModel> wishListModels = findWishList(request.getClientCod());
+
+        for (WishListModel list : wishListModels) {
+            if (list.getSku() == request.getSku()) {
+                wishListRepository.deleteById(list.getId());
+            }
+        }
+    }
+
+
+    public WishListResponse getWishListByClientCode(String clientCode) {
+
+        List<WishListModel> wishListModel = findWishList(clientCode);
+
+        List<ProductWLResponse> listProducts = new ArrayList<>();
+
+        ClientModel client = clientExistValidation(clientCode);
+
+        for (WishListModel list : wishListModel) {
+            ProductModel product = productExistValidation(list.getSku());
+
+            listProducts.add(
+                    ProductWLResponse
+                            .builder()
+                            .productName(product.getName())
+                            .provider(product.getProvider())
+                            .sku(product.getSku())
+                            .build()
+            );
+        }
+
+        return WishListResponse
+                .builder()
+                .clientName(client.getName())
+                .clientCode(client.getClientCode())
+                .products(listProducts)
+                .build();
+    }
+
+    @SneakyThrows
+    public ProductWLResponse getWishListByClientCodeFilterSku(String clientCode, String sku) {
+
+        List<WishListModel> wl = findWishList(clientCode);
+
+        for (WishListModel list : wl) {
+            if (list.getSku().equals(sku)) {
+                ProductModel product = productExistValidation(list.getSku());
+                return ProductWLResponse
+                        .builder()
+                        .productName(product.getName())
+                        .provider(product.getProvider())
+                        .sku(product.getSku())
+                        .build();
+            }
+        }
+        throw new NoProductsFoundInWishListExecption();
+    }
+
+    @SneakyThrows
+    private ProductModel productExistValidation(String sku) {
+        ProductModel product = productRepository.findBySku(sku);
+        if (product == null) {
+            throw new ProductNotFoundException();
+        }
+        return product;
+    }
+
+    @SneakyThrows
+    private ClientModel clientExistValidation(String clientCode) {
+        ClientModel clientModel = clienteRepository.findByClientCode(clientCode);
+        if (clientModel == null) {
+            throw new ClientNotFoundException();
+        }
+        return clientModel;
+    }
+
+    @SneakyThrows
+    private List<WishListModel> findWishList(String clientCode) {
+        return wishListRepository.findAllByClientCode(clientCode);
     }
 }

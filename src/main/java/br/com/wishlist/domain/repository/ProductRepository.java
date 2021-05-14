@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<ProductModel, Long> {
 
     Long deleteBySku(String sku);
+
+    ProductModel findBySku(String sku);
+
+
 }

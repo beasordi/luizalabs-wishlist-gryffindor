@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishListRequest {
+public class WishListDeleteRequest {
 
     @NotNull(message = "clientCod is required")
     @NotEmpty(message = "clientCod cannot be empty")
@@ -21,8 +21,4 @@ public class WishListRequest {
     @NotNull(message = "sku is required")
     @NotEmpty(message = "sku cannot be empty")
     private String sku;
-
-    private String nameWishList;
-
-
 }

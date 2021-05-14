@@ -1,31 +1,55 @@
 package br.com.wishlist.controller;
 
+import br.com.wishlist.controller.dto.ProductWLResponse;
+import br.com.wishlist.controller.dto.WishListDeleteRequest;
 import br.com.wishlist.controller.dto.WishListRequest;
+import br.com.wishlist.controller.dto.WishListResponse;
 import br.com.wishlist.service.WishListService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/wishlist")
 public class WishListController {
 
     @Autowired
     private WishListService wishListService;
 
-    @PostMapping(value = "/register")
+    @RequestMapping(value = "/wishlist", method = RequestMethod.POST)
     public ResponseEntity register(@Valid @RequestBody WishListRequest wishListRequest) {
-        log.info("[CONTROLLER - WishListController]");
+        log.info("[CONTROLLER - WishListController - POST]");
         log.info("[REQUEST - {}}]", wishListRequest);
-        wishListService.process(wishListRequest);
+        wishListService.addWishList(wishListRequest);
         return new ResponseEntity<>("Dados registrados com sucesso", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/wishlist/", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@Valid @RequestBody WishListDeleteRequest request) {
+        log.info("[CONTROLLER - WishListController - DELETE]");
+        log.info("[REQUEST - {}}]", request);
+        wishListService.remove(request);
+        return new ResponseEntity<>("Dados removidos com sucesso", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/wishlist/{client-code}", method = RequestMethod.GET)
+    public ResponseEntity<WishListResponse> getWishListByClientCode(@PathVariable("client-code") String clientCode) {
+        log.info("[CONTROLLER - WishListController - GET - getWishListByClientCode]");
+        log.info("[REQUEST - {}}]", clientCode);
+        return new ResponseEntity<>(wishListService.getWishListByClientCode(clientCode), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/wishlist/client-code/{client-code}/sku/{sku}", method = RequestMethod.GET)
+    public ResponseEntity<ProductWLResponse> getWishListByClientCode(
+            @PathVariable("client-code") String clientCode,
+            @PathVariable("sku") String sku
+    ) {
+        log.info("[CONTROLLER - WishListController - GET - getWishListByClientCode]");
+        log.info("[REQUEST - {}}]", clientCode);
+        return new ResponseEntity<>(wishListService.getWishListByClientCodeFilterSku(clientCode, sku), HttpStatus.OK);
     }
 }

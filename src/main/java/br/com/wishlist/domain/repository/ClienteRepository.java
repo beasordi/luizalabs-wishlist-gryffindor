@@ -1,9 +1,11 @@
 package br.com.wishlist.domain.repository;
 
-import br.com.wishlist.domain.model.ClienteModel;
+import br.com.wishlist.domain.model.ClientModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<ClienteModel, Long> {
+public interface ClienteRepository extends JpaRepository<ClientModel, Long> {
+
+    ClientModel findByClientCode(String clientCode);
 }
