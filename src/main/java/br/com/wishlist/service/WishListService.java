@@ -63,7 +63,7 @@ public class WishListService {
         List<WishListModel> wishListModels = findWishList(request.getClientCod());
 
         for (WishListModel list : wishListModels) {
-            if (list.getSku() == request.getSku()) {
+            if (list.getSku().equals(request.getSku())) {
                 wishListRepository.deleteById(list.getId());
             }
         }
