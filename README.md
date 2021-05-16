@@ -38,6 +38,7 @@ Para rodar o código é necessário seguir as etapas abaixo:
 Para realizar a subida do banco siga as etapas abaixo:
 
 - Windows
+
 	Acesse o menu iniciar
 	Digite "Serviços"
 	Abra o aplicativo
@@ -49,12 +50,14 @@ Para realizar a subida do banco siga as etapas abaixo:
 	Clique em OK
 	
 - IOS
+
 	Acesse o menu iniciar
 	Digite "Prompt de comando"
 	Abra o aplicativo
 	Digite: mysql.server  start
 	
 - Linux (Ubunto)
+
 	Abra o menu iniciar 
 	Digite "Prompt de comando"
 	Abra o aplicativo 
