@@ -1,7 +1,7 @@
 # Wish list - Gryffindor Squad
 ###Introdução
 
-Este projeto foi proposto na segunda edição do Luiza <Code>, programa de formação em tecnologia, exclusivo para mulheres, criado pelo Magazine Luiza.
+Este projeto foi proposto na segunda edição do Luiza Code, programa de formação em tecnologia, exclusivo para mulheres, criado pelo Magazine Luiza.
 A ideia é montar o backend de uma Wishlist (lista de desejos), para que, em um cenário de e-commerce, o cliente possa realizar a busca e seleção de produtos de sua preferência e armazená-los na sua Wishlist, sendo que a qualquer momento o cliente possa visualizar sua Wishlist completa.
 
 ####Processo de instalação
