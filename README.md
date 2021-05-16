@@ -6,24 +6,24 @@ A ideia é montar o backend de uma Wishlist (lista de desejos), para que, em um 
 
 ####Processo de instalação
 
-- Instale o IntelliJ IDEA - Community (versão gratuita);
-- Instale a JDK, JRE e a JVM, para conseguir rodar códigos java na sua máquina;
-- Instale o MySQL - Workbench 8.0.
+- Instale o IntelliJ IDEA - Community (versão gratuita)
+- Instale a JDK, JRE e a JVM, para conseguir rodar códigos java na sua máquina
+- Instale o MySQL - Workbench 8.0
 
 #### Dependencias de software
 
-- IntelliJ IDEA;
-- Java 1.8;
-- Hibernate 6.0.13;
-- JAVAX 2.0.1;
-- Lombok;
-- Maven 2.4.5;
+- IntelliJ IDEA
+- Java 1.8
+- Hibernate 6.0.13
+- JAVAX 2.0.1
+- Lombok
+- Maven 2.4.5
 - Spring boot 2.4.5
-	JPA;
-	Web;
-	Test;
+	JPA
+	Web
+	Test
 - MySQL - Workbench 8.0
-	Connector Java 8.0.23.
+	Connector Java 8.0.23
 		
 Outras IDEs podem compilar o código mas não são suportadas oficialmente.
 	
@@ -31,14 +31,13 @@ Outras IDEs podem compilar o código mas não são suportadas oficialmente.
 
 Para rodar o código é necessário seguir as etapas abaixo:
 
-- Clone o repositório;
-- Suba o banco na sua máquina, conforme os passos abaixo;
-- Builde o código.
+- Clone o repositório
+- Suba o banco na sua máquina, conforme os passos abaixo
+- Builde o código
 
 Para realizar a subida do banco siga as etapas abaixo:
 
 - Windows
-
 
 	Acesse o menu iniciar;
 	Digite "Serviços";
@@ -50,18 +49,14 @@ Para realizar a subida do banco siga as etapas abaixo:
 	Aplique a alteração;
 	Clique em OK.
 	
-	
 - IOS
-
 
 	Acesse o menu iniciar;
 	Digite "Prompt de comando";
 	Abra o aplicativo;
 	Digite: mysql.server  start
 	
-	
 - Linux (Ubunto)
-
 
 	Abra o menu iniciar;
 	Digite "Prompt de comando";
@@ -72,7 +67,7 @@ Acesse o link para mais detalhes no Linux: https://cafetiria.wordpress.com/2015/
 		
 ####Retorno esperado
 
-- Criação de banco de dados automática no Workbench;
+- Criação de banco de dados automática no Workbench
 - Visualização de requests via Swagger no link a seguir: http://localhost:8080/swagger-ui.html
 	
     Caso tenha dificuldades de acessar o Swagger, verifique se a porta que sua máquina esta utilizando é a 8080, caso seja diferente, altere o numero na URL.
