@@ -40,28 +40,28 @@ Para realizar a subida do banco siga as etapas abaixo:
 - Windows
 
 	- Acesse o menu iniciar
-	- Digite "Serviços";
-	- Abra o aplicativo;
-	- Localize o MySQL;
-	- Clique com o botão direito;
-	- Selecione "Propriedades";
-	- Em "Tipo de inicialização", selecione "Automático" ou clique em "iniciar", no menu lateral;
-	- Aplique a alteração;
-	- Clique em OK.
+	- Digite "Serviços"
+	- Abra o aplicativo
+	- Localize o MySQL
+	- Clique com o botão direito
+	- Selecione "Propriedades"
+	- Em "Tipo de inicialização", selecione "Automático" ou clique em "iniciar", no menu lateral
+	- Aplique a alteração
+	- Clique em OK
 	
 - IOS
 
-	Acesse o menu iniciar;
-	Digite "Prompt de comando";
-	Abra o aplicativo;
-	Digite: mysql.server  start
+	- Acesse o menu iniciar
+	- Digite "Prompt de comando"
+	- Abra o aplicativo
+	- Digite: mysql.server  start
 	
 - Linux (Ubunto)
 
-	Abra o menu iniciar;
-	Digite "Prompt de comando";
-	Abra o aplicativo;
-	Digite: /etc/init.d/mysql start
+	- Abra o menu iniciar;
+	- Digite "Prompt de comando";
+	- Abra o aplicativo;
+	- Digite: /etc/init.d/mysql start
 
 Acesse o link para mais detalhes no Linux: https://cafetiria.wordpress.com/2015/03/11/como-reiniciar-o-mysql-no-linux/
 		
