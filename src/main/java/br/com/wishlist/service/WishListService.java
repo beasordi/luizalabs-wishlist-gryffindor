@@ -10,10 +10,7 @@ import br.com.wishlist.domain.model.WishListModel;
 import br.com.wishlist.domain.repository.ClienteRepository;
 import br.com.wishlist.domain.repository.ProductRepository;
 import br.com.wishlist.domain.repository.WishListRepository;
-import br.com.wishlist.exception.ClientNotFoundException;
-import br.com.wishlist.exception.NoProductsFoundInWishListExecption;
-import br.com.wishlist.exception.ProductNotFoundException;
-import br.com.wishlist.exception.WishListLimitExcededException;
+import br.com.wishlist.exception.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +35,10 @@ public class WishListService {
     @SneakyThrows
     public void addWishList(WishListRequest request) {
         log.info("[SERVICE - WishListService - addWishList]");
+
         clientExistValidation(request.getClientCod());
         productExistValidation(request.getSku());
+        productDuplicated(request);
 
         if (findWishList(request.getClientCod()).size() < 20) {
             wishListRepository.save(
@@ -52,6 +51,17 @@ public class WishListService {
             );
         } else {
             throw new WishListLimitExcededException();
+        }
+    }
+
+    @SneakyThrows
+    private void productDuplicated(WishListRequest wishListRequest) {
+        List<WishListModel> models = wishListRepository.findAllByClientCode(wishListRequest.getClientCod());
+
+        for(WishListModel list:models){
+            if(list.getSku().equals(wishListRequest.getSku())){
+                throw new DuplicatedProductInWishList();
+            }
         }
     }
 

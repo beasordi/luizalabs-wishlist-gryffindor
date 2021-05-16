@@ -24,6 +24,18 @@ public class ResponseEntityExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(DuplicatedProductInWishList.class)
+    public ResponseEntity<ErroResponse> duplicatedProduct(DuplicatedProductInWishList e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("Duplicated Product in wishlist")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
     @ExceptionHandler(NoProductsFoundInWishListExecption.class)
     public ResponseEntity<ErroResponse> noProductsFoundInWishList(NoProductsFoundInWishListExecption e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
