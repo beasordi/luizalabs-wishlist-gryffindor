@@ -2,7 +2,9 @@ package br.com.wishlist.controller;
 
 import br.com.wishlist.controller.dto.ProductRequest;
 import br.com.wishlist.controller.dto.ProductResponse;
+import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,10 +39,14 @@ public class ProductController {
         productService.deleteProduct(sku);
         return new ResponseEntity<>("Produto deletado com sucesso!", HttpStatus.OK);
     }
-//
-//    @RequestMapping(value = "/product", method = RequestMethod.PUT)
-//    public ResponseEntity<String> updateProduct(@Valid @RequestBody ProductRequest request){
-//        productService.updateProduct(request);
-//        return new ResponseEntity<>("Produto atualizado com sucesso!");
-//    }
+
+    @ApiOperation(value = "Atualizar produto")
+    @PutMapping(value = "/product/{sku}")
+    public ResponseEntity<String> updateProduct(
+            @PathVariable("sku") String sku,
+            @Valid @RequestBody ProductUpdateRequest request
+    ) {
+        productService.updateProduct(sku, request);
+        return new ResponseEntity<>("Produto atualizado com sucesso!", HttpStatus.OK);
+    }
 }

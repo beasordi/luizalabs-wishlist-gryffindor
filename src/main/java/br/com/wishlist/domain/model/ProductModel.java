@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data // getters e setters
 @Entity // representa um banco de dados
@@ -26,6 +27,14 @@ public class ProductModel {
 
     @Column(name = "sku", nullable = false, unique = true)
     private String sku;
+
+    @NotNull
+    @Column(name = "quantStock")
+    private Long quantStock;
+
+    @NotNull
+    @Column(name = "price")
+    private BigDecimal price;
 
     @Column(name = "category")
     private String category;

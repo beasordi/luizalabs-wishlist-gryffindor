@@ -2,6 +2,7 @@ package br.com.wishlist.service;
 
 import br.com.wishlist.controller.dto.ProductRequest;
 import br.com.wishlist.controller.dto.ProductResponse;
+import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -25,17 +26,7 @@ public class ProductService {
         model.setSku(request.getSku());
         model.setCategory(request.getCategory());
         model.setProvider(request.getProvider());
-        //try - catch
         productRepository.save(model);
-    }
-
-    public List<ProductResponse> listProduct() {
-        List<ProductModel> produtos = productRepository.findAll();
-        return produtos.stream().map(ProductResponse::new).collect(Collectors.toList());
-        // stream = for na lista
-        // map = converter
-        // collect = retorna para uma lista
-        //java 8
     }
 
     @Transactional
@@ -43,4 +34,27 @@ public class ProductService {
         productRepository.deleteBySku(sku);
     }
 
+    public List<ProductResponse> listProduct() {
+        List<ProductModel> productList = productRepository.findAll();
+        return productList.stream().map(ProductResponse::new).collect(Collectors.toList());
+    }
+
+
+    public void updateProduct(String sku, ProductUpdateRequest request) {
+
+        //1 - preciso chamar o repository para encontrar o produto pelo SKU - retorna um model
+        ProductModel model = productRepository.findBySku(sku);
+        //1.2 - preciso atualizar os dados do objeto que voltou do repo com os dados do request
+
+        if (request.getPrice() != null) {
+            model.setPrice(request.getPrice());
+        }
+
+        if (request.getQuantStock() != null) {
+            model.setQuantStock(request.getQuantStock());
+        }
+
+        //2 - ultimo passo(fazer o update)
+        productRepository.save(model);
+    }
 }

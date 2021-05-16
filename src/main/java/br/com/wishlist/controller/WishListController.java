@@ -21,7 +21,7 @@ public class WishListController {
     private WishListService wishListService;
 
     @RequestMapping(value = "/wishlist", method = RequestMethod.POST)
-    public ResponseEntity register(@Valid @RequestBody WishListRequest wishListRequest) {
+    public ResponseEntity<String> register(@Valid @RequestBody WishListRequest wishListRequest) {
         log.info("[CONTROLLER - WishListController - POST]");
         log.info("[REQUEST - {}}]", wishListRequest);
         wishListService.addWishList(wishListRequest);
@@ -29,7 +29,7 @@ public class WishListController {
     }
 
     @RequestMapping(value = "/wishlist/", method = RequestMethod.DELETE)
-    public ResponseEntity delete(@Valid @RequestBody WishListDeleteRequest request) {
+    public ResponseEntity<String> delete(@Valid @RequestBody WishListDeleteRequest request) {
         log.info("[CONTROLLER - WishListController - DELETE]");
         log.info("[REQUEST - {}}]", request);
         wishListService.remove(request);

@@ -43,7 +43,7 @@ public class ClienteRequest {
     @NotEmpty
     private String password;
 
-    @NotNull(message = "password is required")
+    @NotNull(message = "clientCode is required")
     @NotEmpty
     private String clientCode;
 
