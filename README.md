@@ -1,5 +1,6 @@
 # Wish list - Gryffindor Squad
 ###Introdução
+
     Este projeto foi proposto na segunda edição do Luiza <Code>, programa de formação em tecnologia, exclusivo para mulheres, 
 criado pelo Magazine Luiza.
     A ideia é montar o backend de uma Wishlist (lista de desejos), para que, em um cenário de e-commerce, o cliente possa realizar
@@ -7,6 +8,7 @@ a busca e seleção de produtos de sua preferência e armazená-los na sua Wishl
 visualizar sua Wishlist completa.
 
 ####Processo de instalação
+
     Instale o IntelliJ IDEA - Community (versão gratuita);
 	Instale a JPK e a, para conseguir rodar códigos java na sua máquina;
 	Instale o MySQL - Workbench 8.0
@@ -30,6 +32,7 @@ visualizar sua Wishlist completa.
 Outras IDEs podem compilar o código mas não são suportadas oficialmente.
 	
 #### Build e test
+
 Para rodar o código é necessário seguir as etapas abaixo:
 
 	Clone o repositório;
@@ -38,22 +41,22 @@ Para rodar o código é necessário seguir as etapas abaixo:
 
 Para realizar a subida do banco siga as etapas abaixo
 
-	Windows
-		Acesse o menu iniciar
-		Digite "Serviços"
-		Abra o aplicativo
-		Localize o MySQL
-		Clique com o botão direito
-		Selecione "Propriedades"
-		Em "Tipo de inicialização", selecione "Automático" ou clique em "iniciar", no menu lateral
-		Aplique a alteração
-		Clique em OK
+Windows
+	Acesse o menu iniciar
+	Digite "Serviços"
+	Abra o aplicativo
+	Localize o MySQL
+	Clique com o botão direito
+	Selecione "Propriedades"
+	Em "Tipo de inicialização", selecione "Automático" ou clique em "iniciar", no menu lateral
+	Aplique a alteração
+	Clique em OK
 	
-	IOS
-		Acesse o menu iniciar
-		Digite "Prompt de comando"
-		Abra o aplicativo
-		Digite: mysql.server  start
+IOS
+	Acesse o menu iniciar
+	Digite "Prompt de comando"
+	Abra o aplicativo
+	Digite: mysql.server  start
 		
 
 ####Retorno esperado
