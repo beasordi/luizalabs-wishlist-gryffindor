@@ -39,15 +39,15 @@ Para realizar a subida do banco siga as etapas abaixo:
 
 - Windows
 
-	Acesse o menu iniciar;
-	Digite "Serviços";
-	Abra o aplicativo;
-	Localize o MySQL;
-	Clique com o botão direito;
-	Selecione "Propriedades";
-	Em "Tipo de inicialização", selecione "Automático" ou clique em "iniciar", no menu lateral;
-	Aplique a alteração;
-	Clique em OK.
+	- Acesse o menu iniciar
+	- Digite "Serviços";
+	- Abra o aplicativo;
+	- Localize o MySQL;
+	- Clique com o botão direito;
+	- Selecione "Propriedades";
+	- Em "Tipo de inicialização", selecione "Automático" ou clique em "iniciar", no menu lateral;
+	- Aplique a alteração;
+	- Clique em OK.
 	
 - IOS
 
