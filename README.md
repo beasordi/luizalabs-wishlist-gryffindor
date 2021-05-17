@@ -49,18 +49,18 @@ Para realizar a subida do banco siga as etapas abaixo:
 	- Aplique a alteração
 	- Clique em OK
 	
-- IOS
+- MAC
 
 	- Acesse o menu iniciar
-	- Digite "Prompt de comando"
+	- Digite "Terminal"
 	- Abra o aplicativo
 	- Digite: mysql.server  start
 	
 - Linux (Ubunto)
 
-	- Abra o menu iniciar;
-	- Digite "Prompt de comando";
-	- Abra o aplicativo;
+	- Abra o menu iniciar
+	- Digite "Terminal"
+	- Abra o aplicativo
 	- Digite: /etc/init.d/mysql start
 
 Acesse o link para mais detalhes no Linux: https://cafetiria.wordpress.com/2015/03/11/como-reiniciar-o-mysql-no-linux/
