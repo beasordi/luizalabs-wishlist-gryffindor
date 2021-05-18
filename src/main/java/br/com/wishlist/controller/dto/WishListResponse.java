@@ -15,5 +15,5 @@ public class WishListResponse {
 
     private String clientName;
     private String clientCode;
-    List<ProductWLResponse> products;
+    private List<ProductWLResponse> products;
 }

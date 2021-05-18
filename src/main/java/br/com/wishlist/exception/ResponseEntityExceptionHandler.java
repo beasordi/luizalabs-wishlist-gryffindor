@@ -6,7 +6,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 @ControllerAdvice
@@ -24,13 +23,25 @@ public class ResponseEntityExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(DuplicatedProductInWishList.class)
-    public ResponseEntity<ErroResponse> duplicatedProduct(DuplicatedProductInWishList e) {
+    @ExceptionHandler(DuplicatedProductInWishListException.class)
+    public ResponseEntity<ErroResponse> duplicatedProduct(DuplicatedProductInWishListException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("Duplicated Product in wishlist")
+                                .message("Duplicated product in wishlist")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(WishListNotFoundException.class)
+    public ResponseEntity<ErroResponse> duplicatedProduct(WishListNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("WishList not found ")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -42,7 +53,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("No Products Found In WishList")
+                                .message("No products found in wishList")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -79,7 +90,7 @@ public class ResponseEntityExceptionHandler {
                         ErroResponse
                                 .builder()
                                 .message("PRODUCTS LIMIT EXCEEDED (MAX 20) ")
-                                .status(HttpStatus.NOT_FOUND.value())
+                                .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
     }

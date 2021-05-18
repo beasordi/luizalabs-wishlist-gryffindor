@@ -23,6 +23,8 @@ public class ProductService {
     public void addProduct(ProductRequest request) {
         ProductModel model = new ProductModel();
         model.setName(request.getName());
+        model.setQuantStock(request.getQuantStock());
+        model.setPrice(request.getPrice());
         model.setSku(request.getSku());
         model.setCategory(request.getCategory());
         model.setProvider(request.getProvider());

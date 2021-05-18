@@ -19,12 +19,14 @@ public class WishListModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_wishList", nullable = false)
+    @Column(name = "name_wishList")
     private String nameWishList;
 
-    @Column(name = "client_code", nullable = false)
-    private String clientCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_client")
+    private ClientModel idClient;
 
-    @Column(name = "sku", nullable = false)
-    private String sku;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_product")
+    private ProductModel idProduct;
 }

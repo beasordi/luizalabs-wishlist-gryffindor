@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,113 +32,97 @@ public class WishListService {
     @Autowired
     private ProductRepository productRepository;
 
-    @SneakyThrows
     public void addWishList(WishListRequest request) {
         log.info("[SERVICE - WishListService - addWishList]");
 
-        clientExistValidation(request.getClientCod());
-        productExistValidation(request.getSku());
-        productDuplicated(request);
+        ClientModel client = findClient(request.getClientCod());
+        ProductModel product = findProduct(request.getSku());
+        validDuplicated(client.getId(), product.getId());
+        validationLimitWishList(client.getId());
 
-        if (findWishList(request.getClientCod()).size() < 20) {
-            wishListRepository.save(
-                    WishListModel
-                            .builder()
-                            .sku(request.getSku())
-                            .clientCode(request.getClientCod())
-                            .nameWishList(request.getNameWishList())
-                            .build()
-            );
-        } else {
+        wishListRepository.save(
+                WishListModel
+                        .builder()
+                        .nameWishList(request.getNameWishList())
+                        .idProduct(product)
+                        .idClient(client)
+                        .build()
+        );
+    }
+
+    public void remove(WishListDeleteRequest request) {
+        log.info("[SERVICE - WishListService - remove]");
+
+        ClientModel client = findClient(request.getClientCod());
+        ProductModel product = findProduct(request.getSku());
+
+        wishListRepository.delete(client.getId(), product.getId());
+    }
+
+    @SneakyThrows
+    public WishListResponse getWishListByClientCode(String clientCode) {
+        log.info("[SERVICE - WishListService - getWishListByClientCode]");
+        ClientModel client = findClient(clientCode);
+        List<WishListModel> models = wishListRepository.findByClientId(client.getId());
+
+        if (models.isEmpty()) {
+            throw new WishListNotFoundException();
+        }
+
+        return WishListResponse
+                .builder()
+                .clientCode(client.getClientCode())
+                .clientName(client.getName())
+                .products(processProduct(models))
+                .build();
+    }
+
+    public ProductWLResponse getWishListByClientCodeFilterSku(String clientCode, String sku) {
+        log.info("[SERVICE - WishListService - getWishListByClientCodeFilterSku]");
+        ClientModel client = findClient(clientCode);
+        ProductModel product = findProduct(sku);
+        WishListModel model = getWishlist(client, product);
+        return ProductWLResponse
+                .builder()
+                .sku(model.getIdProduct().getSku())
+                .productPrice(model.getIdProduct().getPrice())
+                .productName(model.getIdProduct().getName())
+                .stok(model.getIdProduct().getQuantStock())
+                .provider(model.getIdProduct().getProvider())
+                .build();
+    }
+
+    @SneakyThrows
+    private void validationLimitWishList(Long id) {
+        List<WishListModel> models = wishListRepository.findByClientId(id);
+        if (models.size() >= 20) {
             throw new WishListLimitExcededException();
         }
     }
 
     @SneakyThrows
-    private void productDuplicated(WishListRequest wishListRequest) {
-        List<WishListModel> models = wishListRepository.findAllByClientCode(wishListRequest.getClientCod());
-
-        for(WishListModel list:models){
-            if(list.getSku().equals(wishListRequest.getSku())){
-                throw new DuplicatedProductInWishList();
-            }
+    private WishListModel getWishlist(ClientModel client, ProductModel product) {
+        WishListModel model = wishListRepository.findByClientIdAndProductId(client.getId(), product.getId());
+        if (model == null) {
+            throw new WishListNotFoundException();
         }
+        return model;
     }
 
-    public void remove(WishListDeleteRequest request) {
-        log.info("[SERVICE - WishListService - remove]");
-        clientExistValidation(request.getClientCod());
-        productExistValidation(request.getSku());
-
-        List<WishListModel> wishListModels = findWishList(request.getClientCod());
-
-        for (WishListModel list : wishListModels) {
-            if (list.getSku().equals(request.getSku())) {
-                wishListRepository.deleteById(list.getId());
-            }
-        }
-    }
-
-
-    public WishListResponse getWishListByClientCode(String clientCode) {
-
-        List<WishListModel> wishListModel = findWishList(clientCode);
-
-        List<ProductWLResponse> listProducts = new ArrayList<>();
-
-        ClientModel client = clientExistValidation(clientCode);
-
-        for (WishListModel list : wishListModel) {
-            ProductModel product = productExistValidation(list.getSku());
-
-            listProducts.add(
-                    ProductWLResponse
-                            .builder()
-                            .productName(product.getName())
-                            .provider(product.getProvider())
-                            .sku(product.getSku())
-                            .build()
-            );
-        }
-
-        return WishListResponse
-                .builder()
-                .clientName(client.getName())
-                .clientCode(client.getClientCode())
-                .products(listProducts)
-                .build();
+    private List<ProductWLResponse> processProduct(List<WishListModel> models) {
+        return models.stream().map(ProductWLResponse::new).collect(Collectors.toList());
     }
 
     @SneakyThrows
-    public ProductWLResponse getWishListByClientCodeFilterSku(String clientCode, String sku) {
-
-        List<WishListModel> wl = findWishList(clientCode);
-
-        for (WishListModel list : wl) {
-            if (list.getSku().equals(sku)) {
-                ProductModel product = productExistValidation(list.getSku());
-                return ProductWLResponse
-                        .builder()
-                        .productName(product.getName())
-                        .provider(product.getProvider())
-                        .sku(product.getSku())
-                        .build();
-            }
+    private void validDuplicated(Long idClient, Long idProduct) {
+        WishListModel model = wishListRepository.findByClientIdAndProductId(idClient, idProduct);
+        if (model != null) {
+            throw new DuplicatedProductInWishListException();
         }
-        throw new NoProductsFoundInWishListExecption();
     }
 
     @SneakyThrows
-    private ProductModel productExistValidation(String sku) {
-        ProductModel product = productRepository.findBySku(sku);
-        if (product == null) {
-            throw new ProductNotFoundException();
-        }
-        return product;
-    }
-
-    @SneakyThrows
-    private ClientModel clientExistValidation(String clientCode) {
+    private ClientModel findClient(String clientCode) {
         ClientModel clientModel = clientRepository.findByClientCode(clientCode);
         if (clientModel == null) {
             throw new ClientNotFoundException();
@@ -147,7 +131,11 @@ public class WishListService {
     }
 
     @SneakyThrows
-    private List<WishListModel> findWishList(String clientCode) {
-        return wishListRepository.findAllByClientCode(clientCode);
+    private ProductModel findProduct(String sku) {
+        ProductModel productModel = productRepository.findBySku(sku);
+        if (productModel == null) {
+            throw new ProductNotFoundException();
+        }
+        return productModel;
     }
 }
