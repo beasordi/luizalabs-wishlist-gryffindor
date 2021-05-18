@@ -25,7 +25,7 @@ public class ProductController {
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<String> addProducts(@Valid @RequestBody ProductRequest request) {
         productService.addProduct(request);
-        return new ResponseEntity<>("Produto adicionado com sucesso!", HttpStatus.OK);
+        return new ResponseEntity<>("Produto adicionado com sucesso!", HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.GET)

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "tb_cliente")
+@Table(name = "tb_clients")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientModel {
@@ -24,20 +24,14 @@ public class ClientModel {
     @Column(name = "surname", length = 255, nullable = false)
     private String surname;
 
-    @Column(name = "telephone")
-    private String telephone;
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "adress")
     private String address;
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "login")
-    private String login;
-
-    @Column(name = "password")
-    private String password;
 
     @Column(name = "clientCode", nullable = false, unique = true)
     private String clientCode;

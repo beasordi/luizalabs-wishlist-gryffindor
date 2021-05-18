@@ -7,7 +7,7 @@ import br.com.wishlist.controller.dto.WishListResponse;
 import br.com.wishlist.domain.model.ClientModel;
 import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.model.WishListModel;
-import br.com.wishlist.domain.repository.ClienteRepository;
+import br.com.wishlist.domain.repository.ClientRepository;
 import br.com.wishlist.domain.repository.ProductRepository;
 import br.com.wishlist.domain.repository.WishListRepository;
 import br.com.wishlist.exception.*;
@@ -27,7 +27,7 @@ public class WishListService {
     private WishListRepository wishListRepository;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -139,7 +139,7 @@ public class WishListService {
 
     @SneakyThrows
     private ClientModel clientExistValidation(String clientCode) {
-        ClientModel clientModel = clienteRepository.findByClientCode(clientCode);
+        ClientModel clientModel = clientRepository.findByClientCode(clientCode);
         if (clientModel == null) {
             throw new ClientNotFoundException();
         }

@@ -39,7 +39,7 @@ public class ProductService {
         return productList.stream().map(ProductResponse::new).collect(Collectors.toList());
     }
 
-
+    @Transactional
     public void updateProduct(String sku, ProductUpdateRequest request) {
 
         //1 - preciso chamar o repository para encontrar o produto pelo SKU - retorna um model

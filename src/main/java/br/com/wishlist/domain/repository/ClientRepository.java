@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<ClientModel, Long> {
+public interface ClientRepository extends JpaRepository<ClientModel, Long> {
 
     ClientModel findByClientCode(String clientCode);
+
+    Long deleteByClientCode (String clientCode);
 }
