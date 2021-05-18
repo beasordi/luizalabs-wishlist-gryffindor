@@ -44,7 +44,7 @@ public class WishListController {
     }
 
     @RequestMapping(value = "/wishlist/client-code/{client-code}/sku/{sku}", method = RequestMethod.GET)
-    public ResponseEntity<ProductWLResponse> getWishListByClientCode(
+    public ResponseEntity<ProductWLResponse> getWishListByClientCodeAndSku(
             @PathVariable("client-code") String clientCode,
             @PathVariable("sku") String sku
     ) {

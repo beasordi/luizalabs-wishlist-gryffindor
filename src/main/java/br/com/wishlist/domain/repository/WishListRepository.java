@@ -22,5 +22,5 @@ public interface WishListRepository extends JpaRepository<WishListModel, Long> {
     void delete(@Param("idClient") Long idClient, @Param("idProduct") Long idProduct);
 
     @Query(value = "SELECT * FROM tb_wishlists AS twl WHERE twl.id_client = :idClient AND twl.id_product = :idProduct", nativeQuery = true)
-    WishListModel findByClientIdAndProductId(@Param("idClient") Long id, @Param("idProduct") Long idProduct);
+    WishListModel findByClientIdAndProductId(@Param("idClient") Long idClient, @Param("idProduct") Long idProduct);
 }
