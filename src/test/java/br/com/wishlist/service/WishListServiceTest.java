@@ -1,5 +1,6 @@
 package br.com.wishlist.service;
 
+import br.com.wishlist.controller.dto.WishListDeleteRequest;
 import br.com.wishlist.controller.dto.WishListRequest;
 import br.com.wishlist.domain.model.ClientModel;
 import br.com.wishlist.domain.model.ProductModel;
@@ -136,12 +137,35 @@ public class WishListServiceTest {
 
         target.addWishList(request);
 
-        //then
+        //Then (Então faça isso ou faça aquilo)
         verify(wishListRepository, times(1)).findByClientId(any());
         verify(wishListRepository, times(1)).save(any());
         verify(wishListRepository, times(1)).findByClientIdAndProductId(any(),any());
         verify(clientRepository, times(1)).findByClientCode(any());
         verify(productRepository, times(1)).findBySku(any());
     }
+
+    @Test
+    public void removeWhenWishListTest(){
+
+        //Given
+        WishListDeleteRequest request = WishListDeleteRequest
+                .builder()
+                .clientCod("1")
+                .sku("123")
+                .build();
+
+        //When
+        when(clientRepository.findByClientCode(any())).thenReturn(ClientModel.builder().build());
+        when(productRepository.findBySku(any())).thenReturn(ProductModel.builder().build());
+
+        target.remove(request);
+
+        //Then
+
+        verify(wishListRepository, times(1)).delete(any(), any());
+    }
+
+
 
 }
