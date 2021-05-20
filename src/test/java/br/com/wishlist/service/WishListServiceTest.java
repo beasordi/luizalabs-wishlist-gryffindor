@@ -1,5 +1,6 @@
 package br.com.wishlist.service;
 
+import br.com.wishlist.controller.dto.ClientRequest;
 import br.com.wishlist.controller.dto.WishListRequest;
 import br.com.wishlist.domain.model.ClientModel;
 import br.com.wishlist.domain.model.ProductModel;
@@ -145,3 +146,5 @@ public class WishListServiceTest {
     }
 
 }
+
+
