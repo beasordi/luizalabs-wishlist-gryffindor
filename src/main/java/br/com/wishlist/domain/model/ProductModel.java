@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class ProductModel {
 
     @Id

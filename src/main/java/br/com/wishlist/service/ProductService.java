@@ -5,8 +5,8 @@ import br.com.wishlist.controller.dto.ProductResponse;
 import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.repository.ProductRepository;
-import br.com.wishlist.exception.DuplicatedSku;
-import br.com.wishlist.exception.EmptyList;
+import br.com.wishlist.exception.DuplicatedSkuException;
+import br.com.wishlist.exception.EmptyListException;
 import br.com.wishlist.exception.ProductNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,28 +26,26 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @SneakyThrows
-    public void addProduct(ProductRequest request){
-        try {
-            ProductModel model = new ProductModel();
-            model.setName(request.getName());
-            model.setQuantStock(request.getQuantStock());
-            model.setPrice(request.getPrice());
-            model.setSku(request.getSku());
-            model.setCategory(request.getCategory());
-            model.setProvider(request.getProvider());
-            productRepository.save(model);
-        }catch (Exception e){
-            throw new DuplicatedSku();
-        }
+    public void addProduct(ProductRequest request) {
+        ProductModel model = new ProductModel();
+        model.setName(request.getName());
+        model.setQuantStock(request.getQuantStock());
+        model.setPrice(request.getPrice());
+        model.setSku(request.getSku());
+        model.setCategory(request.getCategory());
+        model.setProvider(request.getProvider());
+
+        validProductDuplicated(request.getSku());
+        productRepository.save(model);
     }
 
     @SneakyThrows
     @Transactional
     public void deleteProduct(String sku) {
         findProduct(sku);
-        try{
+        try {
             productRepository.deleteBySku(sku);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SQLIntegrityConstraintViolationException();
         }
     }
@@ -55,12 +53,11 @@ public class ProductService {
     @SneakyThrows
     public List<ProductResponse> listProduct() {
         List<ProductModel> productList = productRepository.findAll();
-        if (productList.isEmpty()){
-            throw new EmptyList();
+        if (productList.isEmpty()) {
+            throw new EmptyListException();
         }
         return productList.stream().map(ProductResponse::new).collect(Collectors.toList());
     }
-
 
     @Transactional
     public void updateProduct(String sku, ProductUpdateRequest request) {
@@ -78,5 +75,13 @@ public class ProductService {
             throw new ProductNotFoundException();
         }
         return productModel;
+    }
+
+    @SneakyThrows
+    private void validProductDuplicated(String sku) {
+        ProductModel productModel = productRepository.findBySku(sku);
+        if (productModel != null) {
+            throw new DuplicatedSkuException();
+        }
     }
 }

@@ -96,7 +96,7 @@ public class ResponseEntityExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(DuplicatedSku.class)
+    @ExceptionHandler(DuplicatedSkuException.class)
     public ResponseEntity<ErroResponse> duplicatedSku() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
@@ -108,7 +108,7 @@ public class ResponseEntityExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(EmptyList.class)
+    @ExceptionHandler(EmptyListException.class)
     public ResponseEntity<ErroResponse> emptyList() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
