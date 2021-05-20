@@ -131,6 +131,30 @@ public class ResponseEntityExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(ClientCodeDuplicatedException.class)
+    public ResponseEntity<ErroResponse> clientCodeDuplicated() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("Client already registered")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(EmptyListClientException.class)
+    public ResponseEntity<ErroResponse> emptyListClient() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("Client List is empty")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
     private String tratamentoDeMensagem(MethodArgumentNotValidException e) {
         String[] textoSeparado = e.getMessage().split(";");
         long count = Arrays.stream(textoSeparado).count();
