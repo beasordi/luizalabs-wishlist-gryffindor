@@ -56,6 +56,7 @@ public class WishListServiceTest {
         when(wishListRepository.findByClientIdAndProductId(any(), any())).thenReturn(WishListModel.builder().build());
 
         target.addWishList(request);
+        // Then (faça ou verifique isso) -- utilizados NO GERAL pra métodos que NÃO VOID
     }
 
     @Test(expected = ClientNotFoundException.class)
