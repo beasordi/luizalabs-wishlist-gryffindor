@@ -7,7 +7,6 @@ import br.com.wishlist.domain.model.ClientModel;
 import br.com.wishlist.domain.repository.ClientRepository;
 import br.com.wishlist.exception.ClientCodeDuplicatedException;
 import br.com.wishlist.exception.ClientNotFoundException;
-import br.com.wishlist.exception.DuplicatedSku;
 import br.com.wishlist.exception.EmptyListClientException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

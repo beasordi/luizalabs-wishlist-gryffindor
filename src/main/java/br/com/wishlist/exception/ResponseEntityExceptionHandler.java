@@ -108,7 +108,7 @@ public class ResponseEntityExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(EmptyListException.class)
+    @ExceptionHandler(EmptyListProductException.class)
     public ResponseEntity<ErroResponse> emptyList() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(

@@ -3,11 +3,9 @@ package br.com.wishlist.service;
 import br.com.wishlist.controller.dto.ProductRequest;
 import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.domain.model.ProductModel;
-import br.com.wishlist.domain.repository.ClientRepository;
 import br.com.wishlist.domain.repository.ProductRepository;
-import br.com.wishlist.domain.repository.WishListRepository;
 import br.com.wishlist.exception.DuplicatedSkuException;
-import br.com.wishlist.exception.EmptyListException;
+import br.com.wishlist.exception.EmptyListProductException;
 import br.com.wishlist.exception.ProductNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,16 +29,9 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-    @Mock
-    private ClientRepository clientRepository;
-
-    @Mock
-    private WishListRepository wishListRepository;
-
-    //erro
     @Test(expected = DuplicatedSkuException.class)
     public void addProductWhenValidDuplicatedSkuTest() {
-        //given
+
         ProductRequest request = ProductRequest
                 .builder()
                 .category("Eletrônicos")
@@ -50,16 +41,16 @@ public class ProductServiceTest {
                 .provider("Sony")
                 .quantStock(5L)
                 .build();
-        //when
+
         when(productRepository.findBySku(any())).thenReturn(ProductModel.builder().build());
         target.addProduct(request);
-        //then
+
         verify(productRepository, times(1)).findBySku(any());
     }
 
     @Test
     public void addProductWhenSuccessTest() {
-        //given
+
         ProductRequest request = ProductRequest
                 .builder()
                 .category("Electronics")
@@ -69,80 +60,68 @@ public class ProductServiceTest {
                 .provider("Sony")
                 .quantStock(5L)
                 .build();
-        //when
+
         when(productRepository.findBySku(any())).thenReturn(null);
         target.addProduct(request);
 
-        //then
         verify(productRepository, times(1)).save(any());
     }
 
     @Test
     public void ListProductWhenSuccessTest() {
-        //given
         List<ProductModel> list = new ArrayList<>();
         list.add(new ProductModel(1L, "PS5", "987", 5L, new BigDecimal(5000), "Electronics", "Sony"));
-        //when
+
         when(productRepository.findAll()).thenReturn(list);
         target.listProduct();
-        //then
+
         verify(productRepository, times(1)).findAll();
     }
 
-    @Test(expected = EmptyListException.class)
+    @Test(expected = EmptyListProductException.class)
     public void ListProductWhenErrorTest() {
-        //given
         List<ProductModel> list = new ArrayList<>();
-        //when
+
         when(productRepository.findAll()).thenReturn(list);
         target.listProduct();
-        //then
+
         verify(productRepository, times(1)).findAll();
     }
 
     @Test
-    public void DeleteProductWhenSuccessTest(){
-        //given
-        //when
+    public void DeleteProductWhenSuccessTest() {
         when(productRepository.findBySku(any())).thenReturn(ProductModel.builder().build());
         target.deleteProduct(any());
-        //then
-        verify(productRepository,times(1)).deleteBySku(any());
 
+        verify(productRepository, times(1)).deleteBySku(any());
     }
 
     @Test
-    public void UpdateProductWhenSuccessTest(){
-        //given
+    public void UpdateProductWhenSuccessTest() {
         ProductUpdateRequest request = ProductUpdateRequest
                 .builder()
                 .price(new BigDecimal(5000))
                 .quantStock(5L)
                 .build();
-
-        //when
         ProductModel product = new ProductModel();
 
         when(productRepository.findBySku(any())).thenReturn(product);
-        target.updateProduct(any(),request);
-        //then
-        verify(productRepository,times(1)).save(any());
+        target.updateProduct(any(), request);
+
+        verify(productRepository, times(1)).save(any());
     }
 
     @Test(expected = ProductNotFoundException.class)
-    public void UpdateProductErroFindProductTest(){
-        //given
+    public void UpdateProductErrorFindProductTest() {
         ProductUpdateRequest request = ProductUpdateRequest
                 .builder()
                 .price(new BigDecimal(5000))
                 .quantStock(5L)
                 .build();
 
-        //when
-
         when(productRepository.findBySku(any())).thenReturn(null);
-        target.updateProduct(any(),request);
-        //then
-        verify(productRepository,times(1)).save(any());
+        target.updateProduct(any(), request);
+
+        verify(productRepository, times(1)).save(any());
     }
 }

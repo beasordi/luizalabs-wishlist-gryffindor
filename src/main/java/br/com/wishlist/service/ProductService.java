@@ -6,7 +6,7 @@ import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.repository.ProductRepository;
 import br.com.wishlist.exception.DuplicatedSkuException;
-import br.com.wishlist.exception.EmptyListException;
+import br.com.wishlist.exception.EmptyListProductException;
 import br.com.wishlist.exception.ProductNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class ProductService {
     public List<ProductResponse> listProduct() {
         List<ProductModel> productList = productRepository.findAll();
         if (productList.isEmpty()) {
-            throw new EmptyListException();
+            throw new EmptyListProductException();
         }
         return productList.stream().map(ProductResponse::new).collect(Collectors.toList());
     }
