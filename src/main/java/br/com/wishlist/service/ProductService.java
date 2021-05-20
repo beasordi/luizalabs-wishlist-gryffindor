@@ -5,11 +5,16 @@ import br.com.wishlist.controller.dto.ProductResponse;
 import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.domain.model.ProductModel;
 import br.com.wishlist.domain.repository.ProductRepository;
+import br.com.wishlist.exception.DuplicatedSku;
+import br.com.wishlist.exception.EmptyList;
+import br.com.wishlist.exception.ProductNotFoundException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,43 +25,58 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public void addProduct(ProductRequest request) {
-        ProductModel model = new ProductModel();
-        model.setName(request.getName());
-        model.setQuantStock(request.getQuantStock());
-        model.setPrice(request.getPrice());
-        model.setSku(request.getSku());
-        model.setCategory(request.getCategory());
-        model.setProvider(request.getProvider());
-        productRepository.save(model);
+    @SneakyThrows
+    public void addProduct(ProductRequest request){
+        try {
+            ProductModel model = new ProductModel();
+            model.setName(request.getName());
+            model.setQuantStock(request.getQuantStock());
+            model.setPrice(request.getPrice());
+            model.setSku(request.getSku());
+            model.setCategory(request.getCategory());
+            model.setProvider(request.getProvider());
+            productRepository.save(model);
+        }catch (Exception e){
+            throw new DuplicatedSku();
+        }
     }
 
+    @SneakyThrows
     @Transactional
     public void deleteProduct(String sku) {
-        productRepository.deleteBySku(sku);
+        findProduct(sku);
+        try{
+            productRepository.deleteBySku(sku);
+        }catch (Exception e){
+            throw new SQLIntegrityConstraintViolationException();
+        }
     }
 
+    @SneakyThrows
     public List<ProductResponse> listProduct() {
         List<ProductModel> productList = productRepository.findAll();
+        if (productList.isEmpty()){
+            throw new EmptyList();
+        }
         return productList.stream().map(ProductResponse::new).collect(Collectors.toList());
     }
 
+
     @Transactional
     public void updateProduct(String sku, ProductUpdateRequest request) {
-
-        //1 - preciso chamar o repository para encontrar o produto pelo SKU - retorna um model
+        findProduct(sku);
         ProductModel model = productRepository.findBySku(sku);
-        //1.2 - preciso atualizar os dados do objeto que voltou do repo com os dados do request
-
-        if (request.getPrice() != null) {
-            model.setPrice(request.getPrice());
-        }
-
-        if (request.getQuantStock() != null) {
-            model.setQuantStock(request.getQuantStock());
-        }
-
-        //2 - ultimo passo(fazer o update)
+        model.setPrice(request.getPrice() != null ? request.getPrice() : model.getPrice());
+        model.setQuantStock(request.getQuantStock() != null ? request.getQuantStock() : model.getQuantStock());
         productRepository.save(model);
+    }
+
+    @SneakyThrows
+    private ProductModel findProduct(String sku) {
+        ProductModel productModel = productRepository.findBySku(sku);
+        if (productModel == null) {
+            throw new ProductNotFoundException();
+        }
+        return productModel;
     }
 }

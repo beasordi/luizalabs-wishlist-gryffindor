@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 
 @ControllerAdvice
@@ -90,6 +91,41 @@ public class ResponseEntityExceptionHandler {
                         ErroResponse
                                 .builder()
                                 .message("PRODUCTS LIMIT EXCEEDED (MAX 20) ")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(DuplicatedSku.class)
+    public ResponseEntity<ErroResponse> duplicatedSku() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("Duplicated sku")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(EmptyList.class)
+    public ResponseEntity<ErroResponse> emptyList() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("List is empty")
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .build()
+                );
+    }
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ErroResponse> integrateError() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErroResponse
+                                .builder()
+                                .message("Product is linked to a wishlist, it is not possible to remove")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );

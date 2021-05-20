@@ -14,6 +14,7 @@ import br.com.wishlist.exception.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class WishListService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    private int limit = 20;
 
     public void addWishList(WishListRequest request) {
         log.info("[SERVICE - WishListService - addWishList]");
@@ -95,7 +98,7 @@ public class WishListService {
     @SneakyThrows
     private void validationLimitWishList(Long id) {
         List<WishListModel> models = wishListRepository.findByClientId(id);
-        if (models.size() >= 20) {
+        if (models.size() >= limit) {
             throw new WishListLimitExcededException();
         }
     }
