@@ -68,8 +68,9 @@ Acesse o link para mais detalhes no Linux: https://cafetiria.wordpress.com/2015/
 ####Retorno esperado
 
 - Criação de banco de dados automática no Workbench
-- Visualização de requests via Swagger no link a seguir: http://localhost:8080/swagger-ui.html
-	
+
+- Visualização de requests via Swagger Produção no link a seguir: https://luizalabs-wishlist-gryffindor.herokuapp.com/swagger-ui.html#/
+- Visualização de requests via Swagger Local no link a seguir: http://localhost:8080/swagger-ui.html	
     Caso tenha dificuldades de acessar o Swagger, verifique se a porta que sua máquina esta utilizando é a 8080, caso seja diferente, altere o numero na URL.
 
 ####Metodologias ágeis
