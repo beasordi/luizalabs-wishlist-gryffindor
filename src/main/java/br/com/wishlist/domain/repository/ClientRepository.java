@@ -9,5 +9,5 @@ public interface ClientRepository extends JpaRepository<ClientModel, Long> {
 
     ClientModel findByClientCode(String clientCode);
 
-    void deleteByClientCode (String clientCode);
+    void deleteByClientCode(String clientCode);
 }

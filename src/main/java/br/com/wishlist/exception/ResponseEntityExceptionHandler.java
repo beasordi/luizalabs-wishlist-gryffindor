@@ -119,6 +119,7 @@ public class ResponseEntityExceptionHandler {
                                 .build()
                 );
     }
+
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<ErroResponse> integrateError() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

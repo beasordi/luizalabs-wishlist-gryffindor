@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-
 public class ClientService {
 
     @Autowired
@@ -28,20 +27,18 @@ public class ClientService {
 
     @SneakyThrows
     public void addClient(ClientRequest clientRequest) {
-        try {
 
-            ClientModel model = new ClientModel();
-            model.setName(clientRequest.getName());
-            model.setSurname(clientRequest.getSurname());
-            model.setAddress(clientRequest.getAddress());
-            model.setEmail(clientRequest.getEmail());
-            model.setPhone(clientRequest.getPhone());
-            model.setClientCode(clientRequest.getClientCode());
+        ClientModel model = new ClientModel();
+        model.setName(clientRequest.getName());
+        model.setSurname(clientRequest.getSurname());
+        model.setAddress(clientRequest.getAddress());
+        model.setEmail(clientRequest.getEmail());
+        model.setPhone(clientRequest.getPhone());
+        model.setClientCode(clientRequest.getClientCode());
 
-            clientRepository.save(model);
-        } catch (Exception e) {
-            throw new ClientCodeDuplicatedException();
-        }
+        validClientDuplicated(clientRequest.getClientCode());
+        clientRepository.save(model);
+
     }
 
     @SneakyThrows
@@ -64,7 +61,6 @@ public class ClientService {
         }
     }
 
-
     public void updateClient(String clientCode, ClientUpdateRequest request) {
 
         ClientModel model = clientRepository.findByClientCode(clientCode);
@@ -80,7 +76,6 @@ public class ClientService {
         model.setSurname(request.getSurname() != null ? request.getSurname() : model.getSurname());
 
         return model;
-
     }
 
     @SneakyThrows
@@ -92,7 +87,11 @@ public class ClientService {
         return clientModel;
     }
 
+    @SneakyThrows
+    private void validClientDuplicated(String clientCode) {
+        ClientModel clientModel = clientRepository.findByClientCode(clientCode);
+        if (clientModel != null) {
+            throw new ClientCodeDuplicatedException();
+        }
+    }
 }
-
-
-

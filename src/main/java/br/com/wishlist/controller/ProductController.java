@@ -36,6 +36,7 @@ public class ProductController {
         List<ProductResponse> response = productService.listProduct();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @ApiOperation(value = "Deletar produto")
     @RequestMapping(value = "/product/{sku}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteProduct(@PathVariable("sku") String sku) throws SQLIntegrityConstraintViolationException {

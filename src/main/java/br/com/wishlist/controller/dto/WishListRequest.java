@@ -23,6 +23,4 @@ public class WishListRequest {
     private String sku;
 
     private String nameWishList;
-
-
 }

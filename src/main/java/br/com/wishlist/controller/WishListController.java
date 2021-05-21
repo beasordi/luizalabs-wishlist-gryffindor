@@ -29,6 +29,7 @@ public class WishListController {
         wishListService.addWishList(wishListRequest);
         return new ResponseEntity<>("Dados registrados com sucesso", HttpStatus.OK);
     }
+
     @ApiOperation(value = "Remover um produto da Wishlist do cliente")
     @RequestMapping(value = "/wishlist/", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@Valid @RequestBody WishListDeleteRequest request) {

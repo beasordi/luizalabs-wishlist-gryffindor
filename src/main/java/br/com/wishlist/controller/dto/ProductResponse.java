@@ -21,7 +21,6 @@ public class ProductResponse {
     private BigDecimal price;
     private Long quantStock;
 
-
     public ProductResponse(ProductModel productModel) {
         this.name = productModel.getName();
         this.sku = productModel.getSku();

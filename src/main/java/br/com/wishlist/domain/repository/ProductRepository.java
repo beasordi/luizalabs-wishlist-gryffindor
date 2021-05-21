@@ -10,6 +10,4 @@ public interface ProductRepository extends JpaRepository<ProductModel, Long> {
     void deleteBySku(String sku);
 
     ProductModel findBySku(String sku);
-
-
 }

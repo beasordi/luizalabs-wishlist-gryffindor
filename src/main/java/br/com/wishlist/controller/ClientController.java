@@ -3,7 +3,6 @@ package br.com.wishlist.controller;
 import br.com.wishlist.controller.dto.ClientRequest;
 import br.com.wishlist.controller.dto.ClientResponse;
 import br.com.wishlist.controller.dto.ClientUpdateRequest;
-import br.com.wishlist.controller.dto.ProductUpdateRequest;
 import br.com.wishlist.service.ClientService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +52,4 @@ public class ClientController {
         clientService.updateClient(clientCode, request);
         return new ResponseEntity<>("Cliente atualizado com sucesso!", HttpStatus.OK);
     }
-
-
 }

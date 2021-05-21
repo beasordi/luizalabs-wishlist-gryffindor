@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 
 public class ClientUpdateRequest {
-@NotNull(message = "Nome não pode ser nulo")
+    @NotNull(message = "Nome não pode ser nulo")
     private String name;
     private String surname;
     private String phone;

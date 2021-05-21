@@ -40,7 +40,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void deleteProduct(String sku) throws SQLIntegrityConstraintViolationException{
+    public void deleteProduct(String sku) throws SQLIntegrityConstraintViolationException {
         findProduct(sku);
         try {
             productRepository.deleteBySku(sku);
