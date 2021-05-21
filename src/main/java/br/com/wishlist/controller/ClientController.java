@@ -22,6 +22,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @ApiOperation(value = "Adicionar cliente")
     @RequestMapping(value = "/client", method = RequestMethod.POST)
     public ResponseEntity<String> addClient(@Valid @RequestBody ClientRequest clientRequest) {
         clientService.addClient(clientRequest);
@@ -29,12 +30,14 @@ public class ClientController {
 
     }
 
+    @ApiOperation(value = "Listar cliente")
     @RequestMapping(value = "/client", method = RequestMethod.GET)
     public ResponseEntity<List<ClientResponse>> listClients() {
         List<ClientResponse> response = clientService.listClients();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Deletar cliente")
     @RequestMapping(value = "/client/{clientCode}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteClient(@PathVariable("clientCode") String clientCode) {
         clientService.deleteClient(clientCode);

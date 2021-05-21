@@ -30,7 +30,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("Duplicated product in wishlist")
+                                .message("Produto duplicado na Wish List")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -42,7 +42,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("WishList not found ")
+                                .message("Wish List não foi encontrada")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -54,7 +54,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("No products found in wishList")
+                                .message("Não existem produtos na Wish List")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -66,7 +66,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("CLIENT NOT FOUND")
+                                .message("Cliente não encontrado")
                                 .status(HttpStatus.NOT_FOUND.value())
                                 .build()
                 );
@@ -78,7 +78,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("PRODUCT NOT FOUND")
+                                .message("Produto não encontrado")
                                 .status(HttpStatus.NOT_FOUND.value())
                                 .build()
                 );
@@ -90,7 +90,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("PRODUCTS LIMIT EXCEEDED (MAX 20) ")
+                                .message("Limite de produtos excedidos (MAX 20)")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -102,7 +102,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("Duplicated sku")
+                                .message("sku duplicado")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -114,7 +114,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("List is empty")
+                                .message("Lista vazia")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -125,7 +125,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("Product is linked to a wishlist, it is not possible to remove")
+                                .message("Produto associado à uma Wish List, não é possivel remover")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -137,7 +137,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("Client already registered")
+                                .message("Cliente já cadastrado")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );
@@ -149,7 +149,7 @@ public class ResponseEntityExceptionHandler {
                 .body(
                         ErroResponse
                                 .builder()
-                                .message("Client List is empty")
+                                .message("Lista de clientes vazia")
                                 .status(HttpStatus.BAD_REQUEST.value())
                                 .build()
                 );

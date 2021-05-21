@@ -39,9 +39,8 @@ public class ProductService {
         productRepository.save(model);
     }
 
-    @SneakyThrows
     @Transactional
-    public void deleteProduct(String sku) {
+    public void deleteProduct(String sku) throws SQLIntegrityConstraintViolationException{
         findProduct(sku);
         try {
             productRepository.deleteBySku(sku);

@@ -12,12 +12,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import java.math.BigDecimal;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -89,7 +90,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void DeleteProductWhenSuccessTest() {
+    public void DeleteProductWhenSuccessTest() throws SQLIntegrityConstraintViolationException {
         when(productRepository.findBySku(any())).thenReturn(ProductModel.builder().build());
         target.deleteProduct(any());
 

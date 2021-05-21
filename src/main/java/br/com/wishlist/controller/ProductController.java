@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 
@@ -22,20 +23,22 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @ApiOperation(value = "Adicionar produto")
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<String> addProducts(@Valid @RequestBody ProductRequest request) {
         productService.addProduct(request);
         return new ResponseEntity<>("Produto adicionado com sucesso!", HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Listar produto")
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public ResponseEntity<List<ProductResponse>> listProducts() {
         List<ProductResponse> response = productService.listProduct();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    @ApiOperation(value = "Deletar produto")
     @RequestMapping(value = "/product/{sku}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteProduct(@PathVariable("sku") String sku) {
+    public ResponseEntity<String> deleteProduct(@PathVariable("sku") String sku) throws SQLIntegrityConstraintViolationException {
         productService.deleteProduct(sku);
         return new ResponseEntity<>("Produto deletado com sucesso!", HttpStatus.OK);
     }

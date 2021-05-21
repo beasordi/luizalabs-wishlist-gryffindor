@@ -35,7 +35,11 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
 
         .title("Gryffindor Squad - Projeto Final")
-        .description("Testando a config do Swagger")
+        .description("Lu.code - Wish List \n" +
+                "Desenvolvedoras:\n" +
+                "Daniele Santana Pereira \n " +
+                "Beatriz Sordi \n" +
+                "Thais Monteiro")
         .version("1.0.0")
         .license("Apache License Version 2.0")
         .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
